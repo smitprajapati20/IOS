@@ -1,0 +1,44 @@
+import SwiftUI
+
+struct TipCalculator: View {
+
+@State private var bill = ""
+
+@State private var tipPercent = 10
+
+var tip: Double{
+(Double(bill) ?? 0) * Double(tipPercent) / 100
+}
+
+var total: Double {
+(Double(bill) ?? 0) + tip
+}
+
+var body: some View {
+
+VStack(spacing:20){
+
+Text("Tip calculator")
+.font(.largeTitle)
+
+TextField("Enter bill amount", text : $bill)
+.textFieldStyle(.roundedBorder)
+
+Picker("Tip", selection : $tipPercent){
+Text("10%").tag(10)
+Text("15%").tag(15)
+Text("20%").tag(20)
+}
+.pickerStyle(.segmented)
+
+Text("Tip: \(tip, specifier:"%.2f")")
+
+Text("Total:\(total,specifier:"%.2f")")
+}
+.padding()
+}
+}
+#Preview{
+
+TipCalculator()
+}

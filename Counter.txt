@@ -1,0 +1,36 @@
+import SwiftUI
+
+struct Counter: View{
+    @State private var count = 0
+
+    var body:some View{
+        VStack{
+            Text("Counter")
+            Text("\(count)")
+            .forgroundColor(count > 10 ? .red : .black)
+
+            HStack{
+                Button("Plus"){
+                    count += 1
+                }
+                .buttonStyle(.borderd)
+
+                Button("Minus"){
+                    if count > 0 {
+                        count -= 1
+                    }
+                }
+                .buttonStyle(.borderd)
+
+                Button("Reset"){
+                    count = 0
+                }
+                .buttonStyle(.borderd)
+            }
+        }
+    }
+}
+
+#Preview{
+    Counter()
+}

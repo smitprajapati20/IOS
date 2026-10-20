@@ -1,0 +1,34 @@
+import SwiftUI
+
+struct GreetingApp: View{
+    @State private var message = ""
+    @State private var name = ""
+
+    var body: some View{
+        TextField("Enter name",text: $name)
+        .textFieldStyle(.roundedBorder)
+        .padding()
+
+        HStack{
+            Button("Greet"){
+                if name.trimmingCharacters(in: .whitespaces).isEmpty{
+                    message = "please enter name"
+                }
+                else{
+                    message = "Hello, welcome \(name)"
+                }
+            }.buttonStyle(.borderd)
+
+            Button("Reset"){
+                message = ""
+                name = ""
+            }
+            .buttonStyle(borderd)
+        }
+        Text("\(message)")
+    }
+}
+
+#Preview{
+    GreetingApp()
+}

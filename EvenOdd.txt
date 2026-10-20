@@ -1,0 +1,42 @@
+import SwiftUI
+
+struct EvenOdd: View{
+
+    @State private var number = ""
+    @State private var result = ""
+
+    var body: some View{
+        VStack{
+            Text("Even Odd checker")
+
+            TextField("Enter a num", text : $number)
+            Button("Check"){
+                if let value = Int(number){
+                    let parity = value % 2 == 0 ? "Even" : "Odd"
+                    let sign : String 
+
+                    if value > 0{
+                        sign = "Positive"
+                    }
+                    else if value < 0{
+                        sign = "Negative"
+                    }
+                    else{
+                        sign = "Zero"
+                    }
+                    result = "\(parity) and \(sign)"
+                }
+                else{
+                    result = "Please enter a valid number"
+                }
+            }
+            .buttonStyle(.borderProminent)
+            Text(result)
+        }
+        .padding()
+    }
+}
+
+#Preview{
+    EvenOdd()
+}

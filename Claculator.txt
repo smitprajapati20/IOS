@@ -1,0 +1,54 @@
+import SwiftUI
+
+struct calculator: View{
+
+    @State private var firstNumber = ""
+    @State private var secondNumber = ""
+    @State private var operation = ""
+
+    var result : String {
+        guard let a = Double(firstNumber),
+              let b = Double(SecondNumber)
+        
+        else{
+            return ""
+        }
+
+        switch operation{
+            case "+":
+                return "result: \( a + b )"
+            case "-":
+                return "result: \( a - b )"
+            case "*":
+                return "result: \( a * b )"
+            case "/":
+                if b == 0 {
+                    return "Cannot divide by zero"
+                }
+                return "result: \( a / b )"
+            default:
+                return ""
+        }
+    }
+
+    var body: some View{
+        VStack{
+            Text("simple calculator")
+
+            TextField("firstNumber", text : $firstNumber)
+            TextField("secondNumber", text : $secondNumber)
+
+            Picker("operation", selection: $operation){
+                Text("+").tag("+")
+                Text("-").tag("-")
+                Text("*").tag("*")
+                Text("/").tag("/")
+            }.pickerStyle(.segmented)
+            Text(result)
+        }.padding()
+    }
+}
+
+#Preview{
+    calculator()
+}

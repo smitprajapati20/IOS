@@ -1,0 +1,39 @@
+import SwiftUI
+
+struct GroceryList: View{
+    @State private var item = ""
+    @State private var items = [String] = []
+
+    var body: some View{
+        NavigationStack{
+            VStack{
+                HStack{
+                    TextField("Enter item",text: $item)
+                    .textFieldStyle(.roundedBorder)
+
+                    Button("Add"){
+                        if !items.trimmingCharacters(in:.whitespaces).isEmpty{
+                            items.append(item)
+                            item = ""
+                        }
+                    }
+                }.padding()
+
+                List{
+                    ForEach(items, id: \.self){ item in 
+                        Text(item)
+                    }
+                    .onDelete{
+                        index in items.remove(atOffsets: index)
+                    }
+                }
+            }
+            .navigationTitle("GroceryList")
+
+        }
+    }
+}
+
+#Preview{
+    GroceryList()
+}
