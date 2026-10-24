@@ -1,0 +1,53 @@
+import SwiftUI
+struct ImageGridView: View{
+
+    let icons = [
+        "star","heart","bolt",
+        "cloud","sun","moon",
+        "leaf","flame","bell",
+        "gift","house","car",
+    ]
+
+    @State var selectedIcon = ""
+    @State var showSheet = false
+
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
+    var body: some View{
+        VStack{
+            LazyVGrid(columns: columns){
+                ForEach(icons, id: \.self){icon in
+                    Button{
+                        selectedIcon = icon
+                        showSheet = true
+                    } lable: {
+                        VStack{
+                            Image(systemName: icon)
+                            Text(icon)
+                        }
+                        .frame(height: 80)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding()
+        }
+        .sheet(isPresented: $showSheet){
+            VStack{
+                Image(systemName: selectedIcon)
+                Text(selectedIcon)
+                Button("Close"){
+                    showSheet = false
+                }
+            }
+        }
+    }
+}
+
+#Preview{
+    ImageGridView()
+}

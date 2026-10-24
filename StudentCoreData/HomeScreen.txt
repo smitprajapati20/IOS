@@ -1,0 +1,24 @@
+import SwiftUI
+
+struct HomeScreenView: View {
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) { 
+                NavigationLink("Add a New Student") { 
+                    AddStudentView()
+                }
+                .buttonStyle(.borderedProminent)
+    
+                NavigationLink("View All Saved Students") { 
+                    SavedStudentsView()
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .navigationTitle("Students")
+        }
+    }
+}
+#Preview { 
+    HomeScreenView()
+}

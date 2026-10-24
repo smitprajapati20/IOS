@@ -1,0 +1,27 @@
+import SwiftUI
+
+struct MovieDetailView: View{
+    var movies = Movie
+
+    var body: some View{
+        VStack{
+            Text(movie.title)
+            Text("Year: \(movie.year)")
+            Text("Genre: \(movie.genre)")
+            Text("Rating: \(movie.rating)")
+        }
+        .navigationTitle("Movie Detail")
+    }
+}
+
+#Preview{
+    MovieDetailView(
+        movie: Movie(
+            id: 1,
+            title: "Lagaan",
+            year: 2001,
+            genre: "Drama",
+            rating: 8.1
+        )
+    )
+}

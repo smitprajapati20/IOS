@@ -1,0 +1,51 @@
+import SwiftUI
+struct ProfileView: View {
+
+    @State private var isFollowing = false
+    @State private var followers = 0
+
+var body: some View {
+
+    VStack{
+        Image(systemName: "person.circle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 110, height: 110)
+            .foregroundStyle(.blue)
+
+            Text("Hanisha Vaghela")
+            Text("ios Developer | SwiftUI Enthusiast")
+            .foregroundStyle(.secondary) .multilineTextAlignment(.center)
+
+            HStack(spacing: 35){
+                statView(title: "Posts", count:"0")
+                statView(title: "Fllowers", count : "\(followers)")
+                statView(title:"Following", count:"0")
+            }
+
+            Button{
+                isFollowing.toggle()I
+                followers += isFollowing ? 1 : -1 }
+                label: {
+                    Text(isFollowing ? ? "Fllowing")
+                        .frame(maxWidth: .infinity)        
+                        .padding()        
+                        .background(isFollowing ? Color.gray :Color.blue)        
+                        .foregroundStyle(.white)        
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+            }
+            .padding(24)
+        }
+            private func statView(title:String,count:String) -> some View { 
+                VStack(spacing:6){
+                    Text(count)
+                    Text(title)
+                        .foregroundStyle(.secondary)
+            }
+        }
+}
+
+#Preview {
+ProfileView()
+}

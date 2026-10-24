@@ -1,0 +1,47 @@
+import SwiftUI
+import CoreData
+
+struct AddStudentView: View {
+
+    @Environment(\.managedObjectContext) private var context
+
+    @State private var name = "hanisha"
+    @State private var rollNo = "130"
+    @State private var className = "Batch2"
+    @State private var age = "20"
+    @State private var city = "Ahmedabad"
+    @State private var phone = "9876543210"
+
+    var body: some View {
+        Form{
+            TextField("Name", text: $name)
+            TextField("Roll No", text: $rollNo)
+            TextField("Class", text: $className)
+            TextField("Age", text: $age)
+            TextField("City", text: $city)
+            TextField("Phone", text: $phone)
+
+            Button("Save Student") {
+
+                let student = StudentModel(context:
+                student.id = UUID()
+                student.name = name
+                student.rollno = Int32(rollNo) ?? 0
+                student.classname = className
+                student.age = Int16(age) ?? 0
+                student.city = city
+                student.phone = phone
+
+                try? context.save()
+            }
+        }
+    .navigationTitle("Add Student")
+    }
+}
+
+#Preview{
+    NavigationStack { 
+        AddStudentView()
+    }
+    .environment(\.managedObjectContext, PersistenceController.shared.context)
+}

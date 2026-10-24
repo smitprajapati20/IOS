@@ -1,0 +1,68 @@
+import SwiftUI
+import CoreData
+
+struct UpdateStudentView: View {
+
+    @Environment(\.managedObjectContext) private var context 
+    @Environment(\.dismiss) private var dismiss
+
+    @ObservedObject var student: StudentModel
+
+    @State private var name = ""
+    @State private var rollNo = ""
+    @State private var classname = ""
+    @State private var age = ""
+    @State private var city = ""
+    @State private var phone
+
+    var body: some View {
+        Form{
+            TextField("Name", text: $name)
+            TextField("Roll No", text: SrollNo)
+            TextField("Class", text: $classname)
+            TextField("Age", text: Sage)
+            TextField("City", text: Scity)
+            TextField("Phone", text: Sphone)
+
+            Button("Update Student") {
+
+                student.name = name
+                student.rollno = Int32(rollNo) ?? 0
+                student.classname = classname
+                student.age = Int16(age) ?? 0
+                student.city = city
+                student.phone = phone
+
+                try? context.save() 
+                dismiss()
+            }
+        }
+        .navigationTitle("Update Student") 
+        .onAppear {
+            name = student.name ??
+            rollNo = "\(student.rollno)
+            classname = student.classname
+            age = "\(student.age)
+            city = student.city ??
+            phone = student.phone ??
+        }
+    }
+}
+#Preview {
+
+    let context = PersistenceController.shared.container.viewContext
+    let student = StudentModel(context: context)
+
+    student.id = UUID()
+    student.name = "Smit"
+    student.rollno = 10
+    student.classname = "MSC IT"
+    student.age = 20
+    student.city = "Ahmedabad"
+    student.phone = 9876543210
+
+    return NavigationStack { 
+        UpdateStudentView(student: student)
+    }
+    .environment(\.managedObjectContext, context)
+}

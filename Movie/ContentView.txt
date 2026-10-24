@@ -1,0 +1,25 @@
+import SwiftUI
+
+struct ContentView: View{
+    let movies = readMovies()
+
+    var body: some View{
+        NavigationStack{
+            List(movies) { movie in
+                NavigationLink{
+                    MovieDetailView(movie:movie)
+                } lable:{
+                    VStack(alignment : .leading){
+                        Text(movie.title)
+                        Text(String(movie.year))
+                    }
+                }
+            }
+            .navigationTitle("Movies")
+        }
+    }
+}
+
+#Preview{
+    ContentView()
+}

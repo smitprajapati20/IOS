@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "title": "Lagaan",
+        "year": 2001,
+        "genre": "Drama",
+        "rating": 8.1
+    },
+    {
+        "id": 2,
+        "title": "# Idiots",
+        "year": 2009,
+        "genre": "Comedy",
+        "rating": 8.4
+    },
+    {
+        "id": 3,
+        "title": "Dangal",
+        "year": 2016,
+        "genre": "Sports",
+        "rating": 8.3
+    },
+    {
+        "id": 4,
+        "title": "Sholey",
+        "year": 1975,
+        "genre": "Action",
+        "rating": 8.1
+    },
+    {
+        "id": 5,
+        "title": "Tare Zameen Par",
+        "year": 2007,
+        "genre": "Drama",
+        "rating": 8.4
+    }
+]

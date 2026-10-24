@@ -1,0 +1,53 @@
+import SwiftUI
+import CoreData
+
+struct SavedStudentsView: View { 
+    @Environment(\.managedObjectContext) private var context
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudentModel.name, ascending: true)], 
+        animation: .default
+    )
+
+    private var students: FetchedResults<StudentModel>
+
+    var body: some View {
+
+        List {
+            ForEach(students, id: \.id) { student in
+                NavigationLink(
+                    destination: StudentDetailView(student: student)
+                ){
+                    VStack(alignment: .leading) { 
+                        Text(student.name ?? ")
+                        Text("Roll No: \(student.rollno) | Class: \(student.classname ?? ##)")
+                        Text("Age: \(student.age) | City: \(student.city ?? ")")
+                        Text("Phone: \(student.phone ?? ")")
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            context.delete(student)
+                            try? context.save()
+                        } label: {
+                        Label("Delete", systemImage: "trash")
+                        }
+                    }
+                .swipeActions(edge: .leading) {
+                    NavigationLink {
+                        UpdateStudentView(student: student)
+                    } label: {
+                        Label("Update", systemImage: "pencil")
+                    }
+                    .tint(.blue)
+                }
+            }
+        }
+    }
+    .navigationTitle("Saved Students")
+    }
+}
+#Preview {
+    NavigationStack { 
+        SavedStudentsView()
+    }
+    .environment(\.managedObjectContext, PersistenceController.shared.context)
+}

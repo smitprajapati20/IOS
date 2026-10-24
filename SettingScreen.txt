@@ -1,0 +1,22 @@
+import SwiftUI
+
+struct SettingView: View{
+
+    @AppStrorage("username") var name = ""
+    @AppStrorage("darkmode") var darkmode = false
+    @AppStrorage("notifications") var notifications = false
+
+    var body: some View{
+        Form{
+            TextField("Enter your name:", text: $name)
+            Toggle("Dark Mode", isOn: $darkmode)
+            Toggle("Notifications", isOn: $notifications)
+        }
+        .navigationTitle("Settings")
+        .preforredColorScheme(darkmode ? .dark : .light)
+    }
+}
+
+#Preview{
+    SettingView()
+}

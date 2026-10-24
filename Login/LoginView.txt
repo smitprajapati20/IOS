@@ -1,0 +1,44 @@
+import SwiftUI
+
+struct LoginView: View {
+
+    @State var username = ""
+    @State var password = ""
+    @State var showAlert = false
+    @State var isLoggedIn = false
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                TextField("Username", text: $username) \
+                .textFieldStyle(.roundedBorder)
+
+            SecureField("Password", text: $password) 
+            .textFieldStyle(.roundedBorder)
+
+            Button("Login"){
+                if username == "Hanisha" && password == "smit"
+                isLoggedIn = true
+                } else {
+                showAlert = true
+                }
+            }
+            .disabled(username.isEmpty || password.isEmpty)
+
+            NavigationLink (
+                destination: HomeView(usernameBinding: .constant("Hanisha")), 
+                isActive: $isLoggedIn
+            ){
+                EmptyView()
+            }
+            .padding()
+            .alert("Wrong username or password", isPresented: $showAlert) { 
+                Button("OK", role: .cancel) { }
+            }
+        }
+    }
+}
+
+#Preview { 
+    LoginView()
+}

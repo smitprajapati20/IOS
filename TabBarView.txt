@@ -1,0 +1,49 @@
+import SwiftUI
+
+struct TabBarView: View{
+    let cities = ["Ahmedabad","Mumbai","Delhi","Surat","Pune"]
+
+    @State var searchText = ""
+
+    var body: some View{
+        TabView{
+            NavigationStack{
+                List(cities, id: \.self){ city in
+                    Text(city)
+                }
+                .navigationTitle("Home")
+            }
+            .tabItem{
+                Image(systemName: "house")
+                Text("Home")
+            }
+
+            NavigationStack{
+                VStack{
+                    TextField("Search city", text: $searchText)
+                    List(cities.filter{
+                        $0.localizedCaseInsensitiveContains(searchText)
+                    }, id: \.self) {city in
+                        Text(city)
+                    }
+                }
+                .navigationTitle("Search")
+            }
+            .tabItem{
+                Image(systemName: "magnifyingglass")
+                Text("Search")
+            }
+            VStack{
+                Image(systemName: "person.circle.fill")
+                Text("Smit Prajapati")
+            }
+            .tabItem{
+                Image(systemName: "person")
+                Text("Profile")
+            }
+        }
+    }
+}
+#Preview{
+    TabBarView()
+}

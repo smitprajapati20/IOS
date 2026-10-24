@@ -1,0 +1,13 @@
+import SwiftUI
+
+struct HomeView: View {
+
+    @Binding var usernameBinding: String 
+    var body: some View { 
+        Text("Welcome, \(usernameBinding)")
+    }
+}
+
+#Preview {
+HomeView(usernameBinding: .constant("Hanisha"))
+}

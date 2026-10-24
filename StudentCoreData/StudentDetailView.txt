@@ -1,0 +1,80 @@
+import SwiftUI
+import CoreData
+
+struct StudentDetailView: View {
+
+    let student: StudentModel
+    private var avatarURL: URL {
+
+        let id = max(1, min(70, Int(student.rollno == 0 ? 5: student.rollno % 70)))
+        return URL(string: "https://i.pravatar.cc/300?img=\(id)")!
+    }
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                AsyncImage(url: avatarURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 160,height: 160)
+
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 160, height: 160)
+                            .clipShape(Circle())
+                            .shadow(radius: 8)
+                            .accessibilityLabel("Profile picture")
+
+                    case failure:
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 160, height: 160)
+                            .foregroundStyle(.secondary)
+                            .accessibilityLabel("Profile picture failed to load")
+
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 16)
+
+                VStack(alignment:.leading, spacing: 12) {
+                    HStack { Text("Name:").bold(); Text("\(student.name ?? "")") }
+                    HStack { Text("Roll No:").bold(); Text("\(student.rollno)") }
+                    HStack { Text("Class:").bold(); Text("\(student.classname ?? "")") }
+                    HStack { Text("Age:").bold(); Text("\(student.age)") }
+                    HStack { Text("City:").bold(); Text("\(student.city ?? "")")}
+                    HStack { Text("Phone:").bold(); Text("\(student.phone ?? "")")}
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+            }
+            .padding(.bottom, 24)
+        }
+        .navigationTitle(student,name ?? ##) 
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview {
+
+    let context = PersistenceController,shared,container.viewContext
+    let student = StudentModel(context: context)
+
+    student.id = UUID()
+    student.name = "Smit"
+    student.rollno = 10
+    student.classname = "MSc IT"
+    student.age = 20
+    student.city = "Ahmedabad"
+    student.phone = "9876543210"
+
+    return NavigationStack {
+        StudentDetailView(student: student)
+    }
+    .environment(\.managedObjectContext, context)
+}
